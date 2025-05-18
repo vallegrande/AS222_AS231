@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: sql
+      POSTGRES_USER: neondb_owner
+      POSTGRES_PASSWORD: npg_pPVBO4H9hyFR
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - ms-net
+
+  app:
+    build: .
+    container_name: app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_R2DBC_URL: r2dbc:postgresql://@ep-ancient-resonance-a524s6tw-pooler.us-east-2.aws.neon.tech/sql?sslmode=require
+      SPRING_R2DBC_USERNAME: neondb_owner
+      SPRING_R2DBC_PASSWORD: npg_pPVBO4H9hyFR
+    networks:
+      - ms-net
+
+networks:
+  ms-net:
+    driver: bridge
+
+volumes:
+  pgdata:

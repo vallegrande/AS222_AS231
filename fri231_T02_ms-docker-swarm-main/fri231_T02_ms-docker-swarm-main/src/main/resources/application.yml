@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: Spring_WebFlux
+  r2dbc:
+    url: r2dbc:postgresql://@ep-ancient-resonance-a524s6tw-pooler.us-east-2.aws.neon.tech/sql?sslmode=require
+    username: neondb_owner
+    password: npg_pPVBO4H9hyFR
+  flyway:
+    enabled: true
+    locations: classpath:/sql/users.sql
